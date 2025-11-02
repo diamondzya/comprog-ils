@@ -17,11 +17,14 @@
                     <li><a href="" class="hover:text-gray-300 transition">Contact</a></li>
                 </ul>
             </div>
-            <div>
-                <a href="login.html" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-white/10 transition inline-block">Login</a>
-                <a href="signup.html" class="bg-white text-black px-5 py-2 rounded-lg font-semibold hover:bg-gray-300 transition hover:text-white inline-block">Sign Up</a>
+            <div id="authButtons">
+                <a href="./forms/login.html" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-white/10 transition inline-block">Login</a>
+                <a href="./forms/signup.html" class="bg-white text-black px-5 py-2 rounded-lg font-semibold hover:bg-gray-300 transition hover:text-white inline-block">Sign Up</a>
             </div>
-
+            <div id="userSection" class="hidden">
+                <span id="userName" class="mr-4 text-gray-300"></span>
+                <button id="logoutBtn" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-red-500/20 transition">Logout</button>
+            </div>
         </nav>
     </div> 
     
@@ -50,5 +53,29 @@
             <img class="w-52 h-72 object-cover rounded-[40px]" src="" alt="">
         </div>
       </div>
+
+      <script>
+            // Check if user is logged in
+            const user = JSON.parse(localStorage.getItem("user"));
+            const authButtons = document.getElementById("authButtons");
+            const userSection = document.getElementById("userSection");
+            const userName = document.getElementById("userName");
+            const logoutBtn = document.getElementById("logoutBtn");
+
+            if (user) {
+                // Hide login/signup
+                authButtons.style.display = "none";
+                // Show welcome + logout
+                userSection.classList.remove("hidden");
+                userName.textContent = "Welcome, " + user.name + "!";
+            }
+
+            // Logout
+            logoutBtn.addEventListener("click", () => {
+                localStorage.removeItem("user");
+                window.location.reload(); // refresh to reset UI
+            });
+        </script>
+
 </body>
 </html>
