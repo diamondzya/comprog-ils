@@ -27,54 +27,54 @@
             </div>
         </nav>
     </div> 
-    
+
     <!-- Hero Section -->
-     <div class="text-center flex flex-col items-center justify-center h-screen px-6 pt-20">
+    <div class="text-center flex flex-col items-center justify-center h-screen px-6 pt-20">
         <div class="bg-white/10 border border-white/20 rounded-full px-5 py-1 text-sm mb-5">
             New Spring Collection 2025
         </div>
         <h1> Wher style speas, trends resonate, fashion flourishes</h1>
         <p>Unveiling a fashion destination where trends blend seamlessly with your individual style aspirations</p>
-        <button class="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-300 transition">New Collection =></button>
-     </div>
+        <button class="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-300 transition">Shop Now</button>
+    </div>
 
-     <!-- Image Showcase -->
-      <div class="flex justify-center gap-6 flex-wrap px-6 pb-20">
+    <!-- Image Showcase -->
+    <div class="flex justify-center gap-6 flex-wrap px-6 pb-20">
         <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="" alt="">
+            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
         </div>
         <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="" alt="">
+            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
         </div>
         <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="" alt="">
+            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
         </div>
         <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="" alt="">
+            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
         </div>
-      </div>
+    </div>
 
-      <script>
-            // Check if user is logged in
-            const user = JSON.parse(localStorage.getItem("user"));
-            const authButtons = document.getElementById("authButtons");
-            const userSection = document.getElementById("userSection");
-            const userName = document.getElementById("userName");
-            const logoutBtn = document.getElementById("logoutBtn");
+    <script>
+        // Check if user is logged in
+        const user = JSON.parse(localStorage.getItem("user"));
+        const authButtons = document.getElementById("authButtons");
+        const userSection = document.getElementById("userSection");
+        const userName = document.getElementById("userName");
+        const logoutBtn = document.getElementById("logoutBtn");
 
-            if (user) {
-                // Hide login/signup
-                authButtons.style.display = "none";
-                // Show welcome + logout
-                userSection.classList.remove("hidden");
-                userName.textContent = "Welcome, " + user.name + "!";
-            }
+        if (user) {
+            // Hide login/signup
+            authButtons.style.display = "none";
+            // Show welcome + logout
+            userSection.classList.remove("hidden");
+            userName.textContent = "Welcome, " + user.name + "!";
+        }
 
             // Logout
             logoutBtn.addEventListener("click", () => {
                 localStorage.removeItem("user");
                 window.location.reload(); // refresh to reset UI
             });
-        </script>
+    </script>
 </body>
 </html>
