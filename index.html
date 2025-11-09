@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Computer Programming 2 - ILS</title>
-    <link rel="stylesheet" href="./src/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-900 text-white font-sans">
     <div>
         <nav class="flex justify-between items-center px-10 py-6 bg-black/90 fixed top-0 w-full z-10 backdrop-blur">
-            <div class="text-2xl font-bold tracking-wide">Qadosh Threads</div>
+            <div class="text-2xl font-bold tracking-wide hover:text-blue-200 hover:scale-105 transition">Qadosh Threads</div>
             <div>
                 <ul class="flex gap-6">
-                    <li><a href="#" class="bg-white text-black border px-5 py-2 rounded-full hover:bg-black transition duration-300">Home</a></li>
+                    <li><a href="#" class="bg-white text-black border px-5 py-2 rounded-full hover:bg-gray-200 transition duration-300">Home</a></li>
                     <li><a href="" class="hover:text-gray-300 transition">About</a></li>
                     <li><a href="" class="hover:text-gray-300 transition">Contact</a></li>
                 </ul>
@@ -54,27 +54,38 @@
         </div>
     </div>
 
+
     <script>
-        // Check if user is logged in
-        const user = JSON.parse(localStorage.getItem("user"));
-        const authButtons = document.getElementById("authButtons");
-        const userSection = document.getElementById("userSection");
-        const userName = document.getElementById("userName");
-        const logoutBtn = document.getElementById("logoutBtn");
+        document.addEventListener("DOMContentLoaded", () =>
+        {
+            const user = JSON.parse(localStorage.getItem("user")); // get user data from localStorage
+            const authButtons = document.getElementById("authButtons");
+            const userSection = document.getElementById("userSection");
+            const userName = document.getElementById("userName");
+            const logoutBtn = document.getElementById("logoutBtn");
 
-        if (user) {
-            // Hide login/signup
-            authButtons.style.display = "none";
-            // Show welcome + logout
-            userSection.classList.remove("hidden");
-            userName.textContent = "Welcome, " + user.name + "!";
-        }
+            if (user)
+            {
+                // ✅ User is logged in
+                authButtons.classList.add("hidden");      // hide login/signup
+                userSection.classList.remove("hidden");   // show logout section
+                userName.textContent = "Welcome, " + user.name + "!";
 
-            // Logout
-            logoutBtn.addEventListener("click", () => {
-                localStorage.removeItem("user");
-                window.location.reload(); // refresh to reset UI
-            });
+                // logout function
+                logoutBtn.addEventListener("click", () =>
+                {
+                    localStorage.removeItem("user");        // remove user data
+                    localStorage.removeItem("isLoggedIn");  // optional
+                    window.location.reload();               // refresh to update UI
+                });
+            }
+            else
+            {
+                // ❌ User is not logged in
+                userSection.classList.add("hidden");      // hide logout
+                authButtons.classList.remove("hidden");   // show login/signup
+            }
+        });
     </script>
 </body>
 </html>
