@@ -1,91 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computer Programming 2 - ILS</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qadosh Threads</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
-    <div>
-        <nav class="flex justify-between items-center px-10 py-6 bg-black/90 fixed top-0 w-full z-10 backdrop-blur">
-            <div class="text-2xl font-bold tracking-wide hover:text-blue-200 hover:scale-105 transition">Qadosh Threads</div>
-            <div>
-                <ul class="flex gap-6">
-                    <li><a href="#" class="bg-white text-black border px-5 py-2 rounded-full hover:bg-gray-200 transition duration-300">Home</a></li>
-                    <li><a href="" class="hover:text-gray-300 transition">About</a></li>
-                    <li><a href="" class="hover:text-gray-300 transition">Contact</a></li>
-                </ul>
-            </div>
-            <div id="authButtons">
-                <a href="./forms/login.html" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-white/10 transition inline-block">Login</a>
-                <a href="./forms/signup.html" class="bg-white text-black px-5 py-2 rounded-lg font-semibold hover:bg-gray-300 transition hover:text-white inline-block">Sign Up</a>
-            </div>
-            <div id="userSection" class="hidden">
-                <span id="userName" class="mr-4 text-gray-300"></span>
-                <button id="logoutBtn" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-red-500/20 transition">Logout</button>
-            </div>
-        </nav>
-    </div> 
 
-    <!-- Hero Section -->
-    <div class="text-center flex flex-col items-center justify-center h-screen px-6 pt-20">
-        <div class="bg-white/10 border border-white/20 rounded-full px-5 py-1 text-sm mb-5">
-            New Spring Collection 2025
-        </div>
-        <h1> Wher style speas, trends resonate, fashion flourishes</h1>
-        <p>Unveiling a fashion destination where trends blend seamlessly with your individual style aspirations</p>
-        <button class="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-300 transition">Shop Now</button>
+  <!-- ✅ NAVBAR -->
+  <nav class="flex justify-between items-center px-6 md:px-10 py-6 bg-black/90 fixed top-0 w-full z-10 backdrop-blur">
+    <div class="text-2xl font-bold tracking-wide hover:text-blue-200 hover:scale-105 transition">
+      <a href="#home">Qadosh Threads</a>
     </div>
 
-    <!-- Image Showcase -->
-    <div class="flex justify-center gap-6 flex-wrap px-6 pb-20">
-        <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
-        </div>
-        <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
-        </div>
-        <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
-        </div>
-        <div class="relative">
-            <img class="w-52 h-72 object-cover rounded-[40px]" src="./images/test.jpg" alt="">
-        </div>
+    <!-- Hamburger Icon (mobile only) -->
+    <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">☰</button>
+
+    <!-- Nav Links -->
+    <ul id="menu" class="hidden md:flex gap-6 flex-col md:flex-row absolute md:static top-20 left-0 w-full md:w-auto bg-black/95 md:bg-transparent text-center md:text-left p-5 md:p-0 space-y-4 md:space-y-0">
+      <li><a href="#home" class="nav-link bg-white text-black border px-5 py-2 rounded-full hover:bg-gray-200 transition duration-300">Home</a></li>
+      <li><a href="#about" class="nav-link hover:text-gray-300 transition">About</a></li>
+      <li><a href="#contact" class="nav-link hover:text-gray-300 transition">Contact</a></li>
+    </ul>
+
+    <!-- Auth Buttons -->
+    <div id="authButtons" class="hidden md:flex gap-3">
+      <a href="./forms/login.html" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-white/10 transition inline-block">Login</a>
+      <a href="./forms/signup.html" class="bg-white text-black px-5 py-2 rounded-lg font-semibold hover:bg-gray-300 transition hover:text-white inline-block">Sign Up</a>
     </div>
 
+    <!-- User Section -->
+    <div id="userSection" class="hidden md:flex items-center">
+      <span id="userName" class="mr-4 text-gray-300"></span>
+      <button id="logoutBtn" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-red-500/20 transition">Logout</button>
+    </div>
+  </nav>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () =>
-        {
-            const user = JSON.parse(localStorage.getItem("user")); // get user data from localStorage
-            const authButtons = document.getElementById("authButtons");
-            const userSection = document.getElementById("userSection");
-            const userName = document.getElementById("userName");
-            const logoutBtn = document.getElementById("logoutBtn");
+  <!-- ✅ HERO SECTION -->
+  <section id="home" class="text-center flex flex-col items-center justify-center h-screen px-6 pt-24 md:pt-20">
+    <div class="bg-white/10 border border-white/20 rounded-full px-5 py-1 text-sm mb-5">
+      New Spring Collection 2025
+    </div>
+    <h1 class="text-3xl md:text-5xl font-bold mb-4">Where style speaks, trends resonate, and fashion flourishes</h1>
+    <p class="text-gray-300 mb-8 max-w-2xl text-sm md:text-base">
+      Unveiling a fashion destination where trends blend seamlessly with your individual style aspirations.
+    </p>
+    <button class="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-300 transition">Shop Now</button>
+  </section>
 
-            if (user)
-            {
-                // ✅ User is logged in
-                authButtons.classList.add("hidden");      // hide login/signup
-                userSection.classList.remove("hidden");   // show logout section
-                userName.textContent = "Welcome, " + user.name + "!";
+  <!-- ✅ SHOP SECTION -->
+  <section id="shop" class="py-20 px-6 md:px-8 bg-gray-950 text-center border-t border-white/10">
+    <h2 class="text-3xl md:text-4xl font-bold mb-12">Shop Our Collection</h2>
 
-                // logout function
-                logoutBtn.addEventListener("click", () =>
-                {
-                    localStorage.removeItem("user");        // remove user data
-                    localStorage.removeItem("isLoggedIn");  // optional
-                    window.location.reload();               // refresh to update UI
-                });
-            }
-            else
-            {
-                // ❌ User is not logged in
-                userSection.classList.add("hidden");      // hide logout
-                authButtons.classList.remove("hidden");   // show login/signup
-            }
+    <div class="flex flex-wrap justify-center gap-8">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 w-64 md:w-72 hover:scale-105 transition">
+        <img src="./images/test.jpg" alt="T-Shirt" class="w-full h-64 object-cover rounded-xl mb-4">
+        <h3 class="text-xl font-semibold mb-2">Classic Tee</h3>
+        <p class="text-gray-400 mb-3">₱499.00</p>
+
+        <!-- Sizes -->
+        <div class="flex justify-center gap-2 mb-4">
+          <button class="size-btn border border-gray-400 rounded-md px-3 py-1 hover:bg-white hover:text-black transition" data-size="S">S</button>
+          <button class="size-btn border border-gray-400 rounded-md px-3 py-1 hover:bg-white hover:text-black transition" data-size="M">M</button>
+          <button class="size-btn border border-gray-400 rounded-md px-3 py-1 hover:bg-white hover:text-black transition" data-size="L">L</button>
+        </div>
+
+        <!-- Quantity -->
+        <div class="flex justify-center items-center gap-4 mb-5">
+          <button class="qty-minus bg-white/20 w-8 h-8 rounded-full text-lg hover:bg-white/30">−</button>
+          <span class="qty-value text-lg">1</span>
+          <button class="qty-plus bg-white/20 w-8 h-8 rounded-full text-lg hover:bg-white/30">+</button>
+        </div>
+
+        <button class="add-cart bg-white text-black font-semibold px-5 py-2 rounded-full hover:bg-gray-300 transition">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ ABOUT SECTION -->
+  <section id="about" class="px-6 md:px-8 py-20 bg-black/40 border-t border-white/10 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">History of Qadosh Threads</h2>
+    <p class="text-gray-300 max-w-4xl mx-auto leading-relaxed text-sm md:text-base">
+      <span class="text-white font-semibold">QADOSH THREADS</span> is a thrift store founded from a shared passion for clothing and thrift fashion. 
+      The owners, <span class="text-white font-semibold">Francis Paglicawan</span> and <span class="text-white font-semibold">John Felix</span>, were inspired 
+      after observing the growing trend of thrift businesses online, where old and branded clothes are being successfully resold.
+    </p>
+  </section>
+
+  <!-- ✅ CONTACT SECTION -->
+  <section id="contact" class="px-6 md:px-8 py-20 text-center bg-gray-950 border-t border-white/10">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Get in Touch</h2>
+    <form class="max-w-md mx-auto space-y-4">
+      <input type="text" placeholder="Your Name" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none">
+      <input type="email" placeholder="Your Email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none">
+      <textarea placeholder="Your Message" rows="4" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none"></textarea>
+      <button type="submit" class="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-300 transition">Send Message</button>
+    </form>
+  </section>
+
+  <!-- ✅ SCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // User system
+      const user = JSON.parse(localStorage.getItem("user"));
+      const authButtons = document.getElementById("authButtons");
+      const userSection = document.getElementById("userSection");
+      const userName = document.getElementById("userName");
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (user) {
+        authButtons.classList.add("hidden");
+        userSection.classList.remove("hidden");
+        userName.textContent = "Welcome, " + user.name + "!";
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("user");
+          window.location.reload();
         });
-    </script>
+      } else {
+        userSection.classList.add("hidden");
+        authButtons.classList.remove("hidden");
+      }
+
+      // Cart system
+      const product = document.querySelector(".bg-white\\/5");
+      const sizeButtons = product.querySelectorAll(".size-btn");
+      const plusBtn = product.querySelector(".qty-plus");
+      const minusBtn = product.querySelector(".qty-minus");
+      const qtyValue = product.querySelector(".qty-value");
+      const addCartBtn = product.querySelector(".add-cart");
+
+      let selectedSize = null;
+      let quantity = 1;
+
+      sizeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          sizeButtons.forEach(b => b.classList.remove("bg-white", "text-black"));
+          btn.classList.add("bg-white", "text-black");
+          selectedSize = btn.dataset.size;
+        });
+      });
+
+      plusBtn.addEventListener("click", () => {
+        quantity++;
+        qtyValue.textContent = quantity;
+      });
+
+      minusBtn.addEventListener("click", () => {
+        if (quantity > 1) {
+          quantity--;
+          qtyValue.textContent = quantity;
+        }
+      });
+
+      addCartBtn.addEventListener("click", () => {
+        if (!selectedSize) {
+          alert("Please select a size first!");
+          return;
+        }
+        const item = {
+          name: "Classic Tee",
+          price: 499,
+          size: selectedSize,
+          quantity: quantity
+        };
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert(`Added ${quantity} ${selectedSize}-size Classic Tee(s) to cart!`);
+      });
+
+      // Mobile menu toggle
+      const menuBtn = document.getElementById("menu-btn");
+      const menu = document.getElementById("menu");
+      menuBtn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    });
+  </script>
 </body>
 </html>
