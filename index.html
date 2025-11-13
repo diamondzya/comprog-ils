@@ -25,6 +25,9 @@
                 <span id="userName" class="mr-4 text-gray-300"></span>
                 <button id="logoutBtn" class="text-white px-5 py-2 rounded-lg border border-white/30 hover:bg-red-500/20 transition">Logout</button>
             </div>
+            <button id="themeToggle" class="ml-4 px-3 py-2 border border-white/30 rounded-lg hover:bg-white/10 transition">
+                🌙
+            </button>
         </nav>
     </div> 
 
@@ -58,6 +61,29 @@
     <script>
         document.addEventListener("DOMContentLoaded", () =>
         {
+            // 🌗 Theme Toggle
+            const themeToggle = document.getElementById("themeToggle");
+            const currentTheme = localStorage.getItem("theme") || "dark";
+            document.body.classList.toggle("bg-gray-900", currentTheme === "dark");
+            document.body.classList.toggle("bg-gray-100", currentTheme === "light");
+            document.body.classList.toggle("text-white", currentTheme === "dark");
+            document.body.classList.toggle("text-black", currentTheme === "light");
+
+            themeToggle.textContent = currentTheme === "dark" ? "🌙" : "☀️";
+
+            themeToggle.addEventListener("click", () =>
+            {
+                const newTheme = document.body.classList.contains("bg-gray-900") ? "light" : "dark";
+
+                document.body.classList.toggle("bg-gray-900");
+                document.body.classList.toggle("bg-gray-100");
+                document.body.classList.toggle("text-white");
+                document.body.classList.toggle("text-black");
+
+                themeToggle.textContent = newTheme === "dark" ? "🌙" : "☀️";
+                localStorage.setItem("theme", newTheme);
+            });
+
             const user = JSON.parse(localStorage.getItem("user")); // get user data from localStorage
             const authButtons = document.getElementById("authButtons");
             const userSection = document.getElementById("userSection");
