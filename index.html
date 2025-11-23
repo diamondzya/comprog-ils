@@ -287,6 +287,7 @@
   <!-- SCRIPTS -->
   <script>
     // ---------- sample product data ----------
+    document.addEventListener('DOMContentLoaded', () => {
     const products = [
       { id: 'p1', title: 'Classic Tee', price: 499, img: './images/Qadosh/213.jpg', desc: 'Curated thrift tee' },
       { id: 'p2', title: 'Cargo Jacket', price: 1299, img: './images/Qadosh/577636541_812841778226015_7343443021645008497_n.jpg', desc: 'Vintage cargo style' },
@@ -309,6 +310,41 @@
         grid.appendChild(clone);
       });
     })();
+
+        // ---------- AUTH UI ----------
+    function updateAuthUI(){
+      const user = JSON.parse(localStorage.getItem('user'));
+      const authButtons = document.getElementById('authButtons');
+      const userSection = document.getElementById('userSection');
+      const userName = document.getElementById('userName');
+      if(user){
+        authButtons.classList.add('hidden');
+        userSection.classList.remove('hidden');
+        userName.textContent = 'Welcome, ' + (user.name || (user.email? user.email.split('@')[0]:'User'));
+      } else {
+        authButtons.classList.remove('hidden');
+        userSection.classList.add('hidden');
+      }
+    }
+    updateAuthUI();
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('user');
+      updateAuthUI();
+    });
+
+    // ---------- mobile menu ----------
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const m = document.getElementById('mobileNav');
+      m.classList.toggle('hidden');
+      document.getElementById('menuBtn').setAttribute('aria-expanded', !m.classList.contains('hidden'));
+    });
+    document.querySelectorAll('#mobileNav a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileNav').classList.add('hidden')));
+
+    // ---------- contact form fallback (if you want client-side validation) ----------
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+      // Let FormSubmit handle sending; optionally show a loading UI here
+    });
 
     // ---------- Quick View ----------
     const quickView = document.getElementById('quickView');
@@ -434,40 +470,7 @@
       alert('Checkout is a stub. Implement external payment integration for production.');
     });
 
-    // ---------- AUTH UI ----------
-    function updateAuthUI(){
-      const user = JSON.parse(localStorage.getItem('user'));
-      const authButtons = document.getElementById('authButtons');
-      const userSection = document.getElementById('userSection');
-      const userName = document.getElementById('userName');
-      if(user){
-        authButtons.classList.add('hidden');
-        userSection.classList.remove('hidden');
-        userName.textContent = 'Welcome, ' + (user.name || (user.email? user.email.split('@')[0]:'User'));
-      } else {
-        authButtons.classList.remove('hidden');
-        userSection.classList.add('hidden');
-      }
-    }
-    updateAuthUI();
 
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('user');
-      updateAuthUI();
-    });
-
-    // ---------- mobile menu ----------
-    document.getElementById('menuBtn').addEventListener('click', () => {
-      const m = document.getElementById('mobileNav');
-      m.classList.toggle('hidden');
-      document.getElementById('menuBtn').setAttribute('aria-expanded', !m.classList.contains('hidden'));
-    });
-    document.querySelectorAll('#mobileNav a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileNav').classList.add('hidden')));
-
-    // ---------- contact form fallback (if you want client-side validation) ----------
-    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
-      // Let FormSubmit handle sending; optionally show a loading UI here
-    });
 
     // ---------- theme accent toggle (keeps dark aesthetic) ----------
     const themeBtn = document.getElementById('themeBtn');
@@ -491,7 +494,7 @@
       });
     }, { threshold: 0.12 });
     reveals.forEach(r => obs.observe(r));
-
+    });
   </script>
 </body>
 </html>
