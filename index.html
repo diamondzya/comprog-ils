@@ -1,834 +1,497 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Qadosh Threads — Dark Streetwear</title>
-    <link rel="shortcut icon" href="images/logo.jpeg" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      /* small custom: scrollbar for cart drawer */
-      .cart-scroll::-webkit-scrollbar {
-        height: 8px;
-        width: 8px;
-      }
-      .cart-scroll::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
-      }
-    </style>
-  </head>
-  <body class="bg-[#07080a] text-gray-200 antialiased">
-    <!-- NAVBAR -->
-    <header class="fixed w-full z-40">
-      <nav
-        class="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4 backdrop-blur bg-black/60 border-b border-white/5"
-      >
-        <div class="flex items-center gap-8">
-          <a
-            href="#home"
-            class="text-2xl font-extrabold tracking-wider hover:text-blue-300 transition"
-            >QADOSH THREADS</a
-          >
-          <ul id="navLinks" class="hidden md:flex gap-6 items-center">
-            <li>
-              <a
-                href="#home"
-                class="nav-link px-4 py-2 rounded-full bg-white text-black font-medium"
-                >Home</a
-              >
-            </li>
-            <li>
-              <a
-                href="#shop"
-                class="nav-link px-3 py-2 hover:text-white/90 transition"
-                >Shop</a
-              >
-            </li>
-            <li>
-              <a
-                href="#about"
-                class="nav-link px-3 py-2 hover:text-white/90 transition"
-                >About</a
-              >
-            </li>
-            <li>
-              <a
-                href="#contact"
-                class="nav-link px-3 py-2 hover:text-white/90 transition"
-                >Contact</a
-              >
-            </li>
-          </ul>
-        </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Qadosh Threads — Dark Streetwear</title>
+  <link rel="shortcut icon" href="images/logo.jpeg" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-        <div class="flex items-center gap-3">
-          <button
-            id="themeBtn"
-            class="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition"
-          >
-            <span id="themeIcon">🌓</span>
-          </button>
+  <style>
+    html { scroll-behavior: smooth; }
+    /* small custom: scrollbar for cart drawer */
+    .cart-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+    .cart-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 8px; }
 
-          <!-- auth / user -->
-          <div id="authButtons" class="hidden md:flex gap-3">
-            <a
-              href="./forms/login.html"
-              class="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition"
-              >Login</a
-            >
-            <a
-              href="./forms/signup.html"
-              class="px-4 py-2 rounded-lg bg-white text-black font-semibold hover:bg-gray-300 transition"
-              >Sign Up</a
-            >
-          </div>
+    /* reveal helpers (initial state applied via class) */
+    .reveal { transform: translateY(18px); opacity: 0; transition: transform 600ms cubic-bezier(.2,.9,.3,1), opacity 600ms ease; }
+    .reveal.is-visible { transform: translateY(0); opacity: 1; }
 
-          <!-- cart icon -->
-          <button
-            id="cartBtn"
-            aria-label="Open cart"
-            class="relative px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3 3h2l.344 2M7 13h10l3-8H6.344L7 13zM7 13l-1 5h12l-1-5M10 21a1 1 0 11-2 0 1 1 0 012 0zm8 0a1 1 0 11-2 0 1 1 0 012 0z"
-              />
-            </svg>
-            <span
-              id="cartCount"
-              class="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full text-[10px] w-5 h-5 grid place-items-center"
-              >0</span
-            >
-          </button>
+    /* subtle text glow accent variable */
+    :root { --accent: rgba(59,130,246,0.9); }
+  </style>
+</head>
+<body class="bg-[#07080a] text-gray-200 antialiased">
 
-          <!-- mobile menu button -->
-          <button
-            id="menuBtn"
-            class="md:hidden px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      <!-- mobile nav -->
-      <div
-        id="mobileNav"
-        class="md:hidden hidden bg-black/80 border-b border-white/5"
-      >
-        <div class="px-6 py-4 flex flex-col gap-3">
-          <a href="#home" class="block py-2">Home</a>
-          <a href="#shop" class="block py-2">Shop</a>
-          <a href="#about" class="block py-2">About</a>
-          <a href="#contact" class="block py-2">Contact</a>
-          <div class="flex gap-2 pt-2">
-            <a
-              href="./forms/login.html"
-              class="flex-1 text-center py-2 border rounded-lg"
-              >Login</a
-            >
-            <a
-              href="./forms/signup.html"
-              class="flex-1 text-center py-2 bg-white text-black rounded-lg"
-              >Sign Up</a
-            >
-          </div>
-        </div>
+  <!-- NAVBAR -->
+  <header class="fixed w-full z-40">
+    <nav class="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4 backdrop-blur bg-black/60 border-b border-white/5">
+      <div class="flex items-center gap-6">
+        <a href="#home" class="text-2xl font-extrabold tracking-wider hover:text-blue-300 transition reveal">QADOSH THREADS</a>
+        <ul id="navLinks" class="hidden md:flex gap-6 items-center">
+          <li><a href="#home" class="nav-link px-4 py-2 rounded-full bg-white text-black font-medium">Home</a></li>
+          <li><a href="#shop" class="nav-link px-3 py-2 hover:text-white/90 transition">Shop</a></li>
+          <li><a href="#about" class="nav-link px-3 py-2 hover:text-white/90 transition">About</a></li>
+          <li><a href="#contact" class="nav-link px-3 py-2 hover:text-white/90 transition">Contact</a></li>
+        </ul>
       </div>
-    </header>
 
-    <main class="pt-28">
-      <!-- HERO -->
-      <section id="home" class="relative min-h-[70vh] flex items-center">
-        <div
-          class="max-w-7xl mx-auto px-6 md:px-10 w-full grid md:grid-cols-2 gap-8 items-center"
-        >
-          <div class="space-y-6">
-            <div class="inline-block px-3 py-1 bg-white/6 rounded-full text-sm">
-              New Spring Collection 2025
-            </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-              Dark. Minimal. Intentional.
-            </h1>
-            <p class="text-gray-400 max-w-xl">
-              QADOSH THREADS blends faith and streetwear — curated thrifted
-              pieces reimagined for confident self-expression.
-            </p>
-            <div class="flex items-center gap-4">
-              <a
-                href="#shop"
-                class="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:scale-105 transition"
-                >Shop Now</a
-              >
-              <a
-                href="#about"
-                class="px-4 py-3 rounded-lg border border-white/10 hover:bg-white/5 transition"
-                >Learn More</a
-              >
-            </div>
-          </div>
+      <div class="flex items-center gap-3">
+        <button id="themeBtn" aria-label="Toggle theme accent" class="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition reveal">
+          <span id="themeIcon">🌓</span>
+        </button>
 
-          <div class="flex justify-center md:justify-end">
-            <div
-              class="relative w-[320px] h-[440px] md:w-[420px] md:h-[540px] rounded-3xl overflow-hidden shadow-2xl group"
-            >
-              <img
-                src="./images/Qadosh/579181863_1222858519700777_4079832495194303146_n.jpg"
-                class="absolute inset-0 w-full h-full object-cover transform transition duration-700 group-hover:scale-110"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition"
-              ></div>
-              <div class="absolute left-6 bottom-6 text-left">
-                <div class="text-sm text-gray-300">Classic Tee</div>
-                <div class="text-2xl font-bold">₱499</div>
-              </div>
-            </div>
-          </div>
+        <!-- auth / user -->
+        <div id="authButtons" class="hidden md:flex gap-3 reveal">
+          <a href="./forms/login.html" class="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition">Login</a>
+          <a href="./forms/signup.html" class="px-4 py-2 rounded-lg bg-white text-black font-semibold hover:bg-gray-300 transition">Sign Up</a>
         </div>
-      </section>
 
-      <!-- SHOP GRID -->
-      <section id="shop" class="py-16">
-        <div class="max-w-7xl mx-auto px-6 md:px-10">
-          <div class="flex items-center justify-between mb-8">
-            <h2 class="text-2xl md:text-3xl font-bold">Shop Our Selection</h2>
-            <div class="text-sm text-gray-400">
-              Premium thrift picks — limited stock
-            </div>
-          </div>
-
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-          >
-            <!-- Product card (repeat for each product) -->
-            <template id="product-card-template">
-              <div
-                class="group bg-white/3 border border-white/5 rounded-2xl overflow-hidden"
-              >
-                <div class="relative overflow-hidden">
-                  <img
-                    class="w-full h-64 object-cover transform transition group-hover:scale-110"
-                  />
-                  <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition"
-                  ></div>
-                </div>
-                <div class="p-4">
-                  <div class="flex items-center justify-between">
-                    <h3 class="font-semibold">Product</h3>
-                    <div class="text-sm text-gray-400">₱0</div>
-                  </div>
-                  <p class="mt-2 text-sm text-gray-300">
-                    Short product description goes here — thrifted, curated,
-                    intentional.
-                  </p>
-                  <div class="mt-4 flex items-center gap-3">
-                    <button
-                      class="quickview-btn flex-1 px-3 py-2 rounded-md border border-white/8 hover:bg-white/5 transition"
-                    >
-                      Quick View
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </div>
+        <!-- user section (hidden unless logged in) -->
+        <div id="userSection" class="hidden md:flex items-center gap-3 reveal">
+          <span id="userName" class="text-sm text-gray-300"></span>
+          <button id="logoutBtn" class="px-3 py-2 rounded-lg border border-white/10 hover:bg-red-600/20 transition">Logout</button>
         </div>
-      </section>
 
-      <!-- ABOUT -->
-      <section id="about" class="py-16 border-t border-white/5">
-        <div class="max-w-6xl mx-auto px-6 md:px-10">
-          <div class="grid md:grid-cols-2 gap-8 items-start">
-            <div class="space-y-6">
-              <h2 class="text-3xl font-bold">History of QADOSH THREADS</h2>
-              <p class="text-gray-400">
-                QADOSH THREADS is a thrift store founded from a shared passion
-                for clothing and thrift fashion. The owners, Francis Paglicawan
-                and John Felix, were inspired after observing the growing trend
-                of thrift businesses on the internet, where old and branded
-                clothes were being successfully resold.
-              </p>
-              <p class="text-gray-400 italic">
-                “We love wearing clothes, we thrift a lot, and as we see many
-                thrifters on the internet making successful businesses from old
-                and branded clothes, we decided to create our own little
-                business.”
-              </p>
-              <p class="text-gray-400">
-                Despite being just Grade 10 students, both founders were
-                determined to make their ideas a reality. They started with
-                little money, using allowances and savings. QADOSH THREADS is
-                more than a business — it’s an expression of identity and faith.
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="bg-white/4 rounded-2xl p-6 border border-white/6">
-                <h3 class="font-semibold text-lg">Mission</h3>
-                <p class="text-gray-300 mt-2">
-                  To establish a Christ-centered foundation in streetwear,
-                  creating clothing that represents fashion and discipleship.
-                </p>
-              </div>
-              <div class="vision-card">
-                <h3 class="vision-title">Vision</h3>
-                <p class="vision-text">
-                  To be recognized as a brand that lets wearers express their
-                  faith and values through clothing.
-                </p>
-              </div>
-            </div>
-          </div>
+        <!-- cart icon -->
+        <button id="cartBtn" aria-label="Open cart" class="relative px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition reveal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.344 2M7 13h10l3-8H6.344L7 13zM7 13l-1 5h12l-1-5M10 21a1 1 0 11-2 0 1 1 0 012 0zm8 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full text-[10px] w-5 h-5 grid place-items-center">0</span>
+        </button>
+
+        <!-- mobile menu button -->
+        <button id="menuBtn" class="md:hidden px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition reveal" aria-expanded="false">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- mobile nav -->
+    <div id="mobileNav" class="md:hidden hidden bg-black/80 border-b border-white/5">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="#home" class="block py-2">Home</a>
+        <a href="#shop" class="block py-2">Shop</a>
+        <a href="#about" class="block py-2">About</a>
+        <a href="#contact" class="block py-2">Contact</a>
+        <div class="flex gap-2 pt-2">
+          <a href="./forms/login.html" class="flex-1 text-center py-2 border rounded-lg">Login</a>
+          <a href="./forms/signup.html" class="flex-1 text-center py-2 bg-white text-black rounded-lg">Sign Up</a>
         </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section id="contact" class="py-16 border-t border-white/5">
-        <div class="max-w-3xl mx-auto px-6 md:px-10">
-          <h2 class="text-3xl font-bold text-center mb-6">Get In Touch</h2>
-          <p class="text-center text-gray-400 mb-8">
-            Questions, collaborations, or feedback — send us a message and we’ll
-            respond soon.
-          </p>
-
-          <form
-            id="contactForm"
-            class="bg-white/3 border border-white/6 p-6 md:p-10 rounded-2xl space-y-4"
-          >
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                name="name"
-                placeholder="Your name"
-                class="bg-[#0e1113] p-3 rounded-lg border border-white/5 outline-none"
-                required
-              />
-              <input
-                name="email"
-                type="email"
-                placeholder="Your email"
-                class="bg-[#0e1113] p-3 rounded-lg border border-white/5 outline-none"
-                required
-              />
-            </div>
-            <input
-              name="subject"
-              placeholder="Subject"
-              class="bg-[#0e1113] p-3 rounded-lg border border-white/5 w-full outline-none"
-            />
-            <textarea
-              name="message"
-              rows="5"
-              placeholder="Your message"
-              class="bg-[#0e1113] p-3 rounded-lg border border-white/5 w-full outline-none"
-              required
-            ></textarea>
-            <div class="text-center">
-              <button
-                type="submit"
-                class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full font-semibold"
-              >
-                Send Message
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
-
-<footer class="relative py-10 mt-12 border-t border-white/5 bg-gray-900 text-gray-300">
-  <div class="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-start gap-10">
-    
-     <!-- Left Side -->
-    <div class="flex-1 flex flex-col justify-center items-start text-left">
-      <p class="text-lg md:text-xl text-gray-300 font-semibold">
-        © <strong class="text-white">QADOSH THREADS</strong> — Built with purpose.
-      </p>
-
-      <!-- Social Media Under Text -->
-      <div class="flex gap-5 mt-4">
-        <a href="https://www.tiktok.com/@qadosh.daily_1602?_r=1&_t=ZS-91bioTjqb5s" class="hover:text-white transition">
-          <i class="fab fa-tiktok text-3xl"></i>
-        </a>
-        <a href="https://www.instagram.com/qadosh_threads?igsh=MTB5OXptMmNiNHFibw==" class="hover:text-white transition">
-          <i class="fab fa-instagram text-3xl"></i>
-        </a>
       </div>
     </div>
+  </header>
 
-    <!-- Right Side (Banner + QR side by side) -->
-    <aside class="flex flex-col items-center md:items-end gap-4 w-full md:w-auto">
-      
-      <!-- Banner and QR Row -->
-      <div class="flex flex-col sm:flex-row items-center justify-end gap-4 w-full">
-        
-      <!-- Banner (More compact, smaller text) -->
-      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-5 rounded-md shadow-md text-right flex-1 max-w-xl">
-        <h2 class="text-base font-semibold tracking-wide">BEWARE OF FAKE SELLERS!</h2>
-        <p class="text-xs opacity-90 mt-1">
-         This is the official QADOSH THREADS website. Scan the QR code to access the verified site. 
-         For inquiries, please visit our official social media pages and contact information.
-        </p>
-      </div>
-        <!-- QR Code -->
-        <img
-          src="images/582427649_1056994776490473_8497968822774556183_n.png"
-          alt="QADOSH THREADS QR Code"
-          class="w-24 h-24 rounded-md border border-gray-600 shadow-sm hover:scale-105 transition-transform duration-300"
-        />
-      </div>
+  <main class="pt-28">
 
-      <!-- Buttons below -->
-      <div class="flex gap-4 text-sm text-gray-400 justify-end w-full">
-        <a href="./forms/privacy.html" class="hover:text-white/90">Privacy</a>
-        <a href="./forms/terms.html" class="hover:text-white/90">Terms</a>
-      </div>
-    </aside>
+    <!-- HERO -->
+    <section id="home" class="relative min-h-[70vh] flex items-center">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 w-full grid md:grid-cols-2 gap-8 items-center">
+        <div class="space-y-6 reveal">
+          <div class="inline-block px-3 py-1 bg-white/6 rounded-full text-sm">New Spring Collection 2025</div>
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Dark. Minimal. Intentional.</h1>
+          <p class="text-gray-400 max-w-xl">QADOSH THREADS blends faith and streetwear — curated thrifted pieces reimagined for confident self-expression.</p>
+          <div class="flex items-center gap-4">
+            <a href="#shop" class="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:scale-105 transition">Shop Now</a>
+            <a href="#about" class="px-4 py-3 rounded-lg border border-white/10 hover:bg-white/5 transition">Learn More</a>
+          </div>
+        </div>
 
+        <div class="flex justify-center md:justify-end reveal">
+          <div class="relative w-[280px] h-[380px] sm:w-[320px] sm:h-[420px] md:w-[420px] md:h-[540px] rounded-3xl overflow-hidden shadow-2xl group">
+            <img src="./images/Qadosh/579181863_1222858519700777_4079832495194303146_n.jpg"
+                 alt="Featured product image"
+                 loading="lazy"
+                 class="absolute inset-0 w-full h-full object-cover transform transition duration-700 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="absolute left-6 bottom-6 text-left">
+              <div class="text-sm text-gray-300">Classic Tee</div>
+              <div class="text-2xl font-bold">₱499</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP GRID -->
+    <section id="shop" class="py-16">
+      <div class="max-w-7xl mx-auto px-6 md:px-10">
+        <div class="flex items-center justify-between mb-8 reveal">
+          <h2 class="text-2xl md:text-3xl font-bold">Shop Our Selection</h2>
+          <div class="text-sm text-gray-400">Premium thrift picks — limited stock</div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Product card template (rendered via script) -->
+          <template id="product-card-template">
+            <article class="group bg-white/3 border border-white/5 rounded-2xl overflow-hidden transform transition hover:-translate-y-1 hover:shadow-lg">
+              <div class="relative overflow-hidden">
+                <img class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+              </div>
+              <div class="p-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-semibold">Product</h3>
+                  <div class="text-sm text-gray-400">₱0</div>
+                </div>
+                <p class="mt-2 text-sm text-gray-300">Short product description — thrifted, curated, intentional.</p>
+                <div class="mt-4 flex items-center gap-3">
+                  <button class="quickview-btn flex-1 px-3 py-2 rounded-md border border-white/8 hover:bg-white/5 transition">Quick View</button>
+                </div>
+              </div>
+            </article>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-16 border-t border-white/5">
+      <div class="max-w-6xl mx-auto px-6 md:px-10">
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="space-y-6 reveal">
+            <h2 class="text-3xl font-bold">History of QADOSH THREADS</h2>
+            <p class="text-gray-400">QADOSH THREADS is a thrift store founded from a shared passion for clothing and thrift fashion. The owners, Francis Paglicawan and John Felix, were inspired after observing the growing trend of thrift businesses on the internet.</p>
+            <p class="text-gray-400 italic">“We love wearing clothes, we thrift a lot, and as we see many thrifters on the internet making successful businesses from old and branded clothes, we decided to create our own little business.”</p>
+            <p class="text-gray-400">Despite being just Grade 10 students, both founders were determined to make their ideas a reality. They started with little money, using allowances and savings. QADOSH THREADS is more than a business — it’s an expression of identity and faith.</p>
+          </div>
+
+          <div class="space-y-6 reveal">
+            <div class="bg-white/4 rounded-2xl p-6 border border-white/6">
+              <h3 class="font-semibold text-lg">Mission</h3>
+              <p class="text-gray-300 mt-2">To establish a Christ-centered foundation in streetwear by creating clothing that represents both fashion and discipleship.</p>
+            </div>
+            <div class="bg-white/4 rounded-2xl p-6 border border-white/6">
+              <h3 class="font-semibold text-lg">Vision</h3>
+              <p class="text-gray-300 mt-2">To be recognized as a brand that lets wearers express their faith and values through clothing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (FormSubmit) -->
+    <section id="contact" class="py-16 border-t border-white/5">
+      <div class="max-w-3xl mx-auto px-6 md:px-10">
+        <h2 class="text-3xl font-bold text-center mb-6 reveal">Get In Touch</h2>
+        <p class="text-center text-gray-400 mb-8 reveal">Questions, collaborations, or feedback — send us a message and we’ll respond soon.</p>
+
+        <!-- email at formsubmit.co -->
+        <form action="https://formsubmit.co/cyrusmadriaga325@gmail.com" method="POST" class="bg-white/3 border border-white/6 p-6 md:p-10 rounded-2xl space-y-4 reveal">
+          <!-- FormSubmit hidden fields -->
+          <input type="hidden" name="_captcha" value="false">
+          <!-- optional: redirect after submit -->
+          <input type="hidden" name="_next" value="https://your-website.github.io/thank-you.html">
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input name="name" placeholder="Your name" class="bg-[#0e1113] p-3 rounded-lg border border-white/5 outline-none" required>
+            <input name="email" type="email" placeholder="Your email" class="bg-[#0e1113] p-3 rounded-lg border border-white/5 outline-none" required>
+          </div>
+
+          <input name="subject" placeholder="Subject" class="bg-[#0e1113] p-3 rounded-lg border border-white/5 w-full outline-none">
+          <textarea name="message" rows="5" placeholder="Your message" class="bg-[#0e1113] p-3 rounded-lg border border-white/5 w-full outline-none" required></textarea>
+
+          <div class="text-center">
+            <button type="submit" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full font-semibold">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="relative py-10 mt-12 border-t border-white/5 bg-gray-900 text-gray-300">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-start gap-10">
+        <div class="flex-1 flex flex-col justify-center items-start text-left">
+          <p class="text-lg md:text-xl text-gray-300 font-semibold">© <strong class="text-white">QADOSH THREADS</strong> — Built with purpose.</p>
+          <div class="flex gap-5 mt-4">
+            <a href="#" class="hover:text-white transition"><i class="fab fa-tiktok text-3xl"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fab fa-instagram text-3xl"></i></a>
+          </div>
+        </div>
+
+        <aside class="flex flex-col items-center md:items-end gap-4 w-full md:w-auto">
+          <div class="flex flex-col sm:flex-row items-center justify-end gap-4 w-full">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-5 rounded-md shadow-md text-right flex-1 max-w-xl">
+              <h2 class="text-base font-semibold tracking-wide">BEWARE OF FAKE SELLERS!</h2>
+              <p class="text-xs opacity-90 mt-1">This is the official QADOSH THREADS website. Scan the QR code to access the verified site.</p>
+            </div>
+            <img src="images/582427649_1056994776490473_8497968822774556183_n.png" alt="QR code" class="w-24 h-24 rounded-md border border-gray-600 shadow-sm hover:scale-105 transition-transform duration-300" loading="lazy">
+          </div>
+          <div class="flex gap-4 text-sm text-gray-400 justify-end w-full">
+            <a href="./forms/privacy.html" class="hover:text-white/90">Privacy</a>
+            <a href="./forms/terms.html" class="hover:text-white/90">Terms</a>
+          </div>
+        </aside>
+      </div>
+    </footer>
+  </main>
+
+  <!-- QUICK VIEW MODAL -->
+  <div id="quickView" class="fixed inset-0 hidden items-center justify-center z-50">
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative bg-[#0b0c0e] rounded-2xl max-w-3xl w-full mx-6 overflow-hidden border border-white/6 shadow-2xl">
+      <div class="md:flex">
+        <div class="md:w-1/2 p-4">
+          <img id="qvImage" class="w-full h-96 object-cover rounded-lg" alt="" loading="lazy">
+        </div>
+        <div class="md:w-1/2 p-6 space-y-4">
+          <div class="flex justify-between items-start">
+            <h3 id="qvTitle" class="text-2xl font-bold">Product</h3>
+            <button id="qvClose" class="text-gray-400 hover:text-white">✕</button>
+          </div>
+          <div id="qvPrice" class="text-gray-400">₱0</div>
+          <p id="qvDesc" class="text-gray-300 text-sm">Short product description.</p>
+
+          <div>
+            <div class="text-sm text-gray-300 mb-2">Size</div>
+            <div class="flex gap-2" id="qvSizes">
+              <button class="qv-size px-3 py-1 rounded-md border border-white/8">S</button>
+              <button class="qv-size px-3 py-1 rounded-md border border-white/8">M</button>
+              <button class="qv-size px-3 py-1 rounded-md border border-white/8">L</button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <button id="qvMinus" class="px-3 py-1 rounded-full bg-white/6">−</button>
+            <span id="qvQty" class="font-semibold">1</span>
+            <button id="qvPlus" class="px-3 py-1 rounded-full bg-white/6">+</button>
+            <div class="flex-1 text-right">
+              <button id="qvAdd" class="px-6 py-2 bg-blue-600 rounded-full font-semibold">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</footer>
 
-    <!-- QUICK VIEW MODAL -->
-    <div
-      id="quickView"
-      class="fixed inset-0 hidden items-center justify-center z-50"
-    >
-      <div class="absolute inset-0 bg-black/60"></div>
-      <div
-        class="relative bg-[#0b0c0e] rounded-2xl max-w-3xl w-full mx-6 overflow-hidden border border-white/6 shadow-2xl"
-      >
-        <div class="md:flex">
-          <div class="md:w-1/2 p-4">
-            <img
-              id="qvImage"
-              class="w-full h-96 object-cover rounded-lg"
-              alt=""
-            />
-          </div>
-          <div class="md:w-1/2 p-6 space-y-4">
-            <div class="flex justify-between items-start">
-              <h3 id="qvTitle" class="text-2xl font-bold">Product</h3>
-              <button id="qvClose" class="text-gray-400 hover:text-white">
-                ✕
-              </button>
-            </div>
-            <div id="qvPrice" class="text-gray-400">₱0</div>
-            <p id="qvDesc" class="text-gray-300 text-sm">
-              Short product description.
-            </p>
+  <!-- CART DRAWER -->
+  <aside id="cartDrawer" class="fixed right-0 top-0 h-full w-[360px] transform translate-x-full z-50 transition">
+    <div class="h-full bg-[#07080a] border-l border-white/6 shadow-2xl flex flex-col">
+      <div class="px-6 py-4 flex items-center justify-between border-b border-white/6">
+        <h3 class="font-bold text-lg">Your Cart</h3>
+        <button id="cartClose" class="text-gray-400 hover:text-white">✕</button>
+      </div>
 
-            <div>
-              <div class="text-sm text-gray-300 mb-2">Size</div>
-              <div class="flex gap-2" id="qvSizes">
-                <button
-                  class="qv-size px-3 py-1 rounded-md border border-white/8"
-                >
-                  Small
-                </button>
-                <button
-                  class="qv-size px-3 py-1 rounded-md border border-white/8"
-                >
-                  Medium
-                </button>
-                <button
-                  class="qv-size px-3 py-1 rounded-md border border-white/8"
-                >
-                  Large
-                </button>
-              </div>
-            </div>
+      <div id="cartItems" class="flex-1 overflow-auto cart-scroll px-6 py-4 space-y-4"></div>
 
-            <div class="flex items-center gap-4">
-              <button id="qvMinus" class="px-3 py-1 rounded-full bg-white/6">
-                −
-              </button>
-              <span id="qvQty" class="font-semibold">1</span>
-              <button id="qvPlus" class="px-3 py-1 rounded-full bg-white/6">
-                +
-              </button>
-              <div class="flex-1 text-right">
-                <button
-                  id="qvAdd"
-                  class="px-6 py-2 bg-blue-600 rounded-full font-semibold"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
+      <div class="px-6 py-4 border-t border-white/6">
+        <div class="flex justify-between text-gray-300 mb-4">
+          <span>Subtotal</span>
+          <strong id="cartSubtotal">₱0</strong>
         </div>
+        <button id="checkoutBtn" class="w-full py-3 bg-blue-600 rounded-full font-semibold">Checkout</button>
       </div>
     </div>
+  </aside>
 
-    <!-- CART DRAWER -->
-    <aside
-      id="cartDrawer"
-      class="fixed right-0 top-0 h-full w-[360px] transform translate-x-full z-50 transition"
-    >
-      <div
-        class="h-full bg-[#07080a] border-l border-white/6 shadow-2xl flex flex-col"
-      >
-        <div
-          class="px-6 py-4 flex items-center justify-between border-b border-white/6"
-        >
-          <h3 class="font-bold text-lg">Your Cart</h3>
-          <button id="cartClose" class="text-gray-400 hover:text-white">
-            ✕
-          </button>
-        </div>
+  <!-- SCRIPTS -->
+  <script>
+    // ---------- sample product data ----------
+    const products = [
+      { id: 'p1', title: 'Classic Tee', price: 499, img: './images/Qadosh/213.jpg', desc: 'Curated thrift tee' },
+      { id: 'p2', title: 'Cargo Jacket', price: 1299, img: './images/Qadosh/577636541_812841778226015_7343443021645008497_n.jpg', desc: 'Vintage cargo style' },
+      { id: 'p3', title: 'Denim Overshirt', price: 899, img: './images/Qadosh/578080879_1157656909279200_8301587949806216162_n.jpg', desc: 'Washed denim' },
+      { id: 'p4', title: 'Street Hoodie', price: 1099, img: './images/Qadosh/579181863_1222858519700777_4079832495194303146_n.jpg', desc: 'Heavyweight hoodie' }
+    ];
 
-        <div
-          id="cartItems"
-          class="flex-1 overflow-auto cart-scroll px-6 py-4 space-y-4"
-        ></div>
+    // ---------- build product grid ----------
+    (function buildGrid(){
+      const grid = document.querySelector('#shop .grid') || document.querySelector('#shop > div > div > div.grid');
+      const template = document.getElementById('product-card-template').content;
+      products.forEach(p => {
+        const clone = template.cloneNode(true);
+        const img = clone.querySelector('img');
+        img.src = p.img; img.alt = p.title;
+        clone.querySelector('h3').textContent = p.title;
+        clone.querySelector('.text-sm').textContent = '₱' + p.price;
+        clone.querySelector('p').textContent = p.desc;
+        clone.querySelector('.quickview-btn').addEventListener('click', () => openQuickView(p));
+        grid.appendChild(clone);
+      });
+    })();
 
-        <div class="px-6 py-4 border-t border-white/6">
-          <div class="flex justify-between text-gray-300 mb-4">
-            <span>Subtotal</span>
-            <strong id="cartSubtotal">₱0</strong>
-          </div>
-          <button
-            id="checkoutBtn"
-            class="w-full py-3 bg-blue-600 rounded-full font-semibold"
-          >
-            Checkout
-          </button>
-        </div>
-      </div>
-    </aside>
+    // ---------- Quick View ----------
+    const quickView = document.getElementById('quickView');
+    const qvImage = document.getElementById('qvImage');
+    const qvTitle = document.getElementById('qvTitle');
+    const qvPrice = document.getElementById('qvPrice');
+    const qvDesc = document.getElementById('qvDesc');
+    const qvSizes = document.getElementById('qvSizes');
+    const qvQty = document.getElementById('qvQty');
 
-    <!-- SCRIPTS -->
-    <script>
-      // ---------- sample product data (replace or expand) ----------
-      const products = [
-        {
-          id: "p1",
-          title: "Classic Tee",
-          price: 499,
-          img: "./images/Qadosh/213.jpg",
-          desc: "Curated thrift tee",
-        },
-        {
-          id: "p2",
-          title: "Cargo Jacket",
-          price: 1299,
-          img: "./images/Qadosh/577636541_812841778226015_7343443021645008497_n.jpg",
-          desc: "Vintage cargo style",
-        },
-        {
-          id: "p3",
-          title: "Denim Overshirt",
-          price: 899,
-          img: "./images/Qadosh/578080879_1157656909279200_8301587949806216162_n.jpg",
-          desc: "Washed denim",
-        },
-        {
-          id: "p4",
-          title: "Street Hoodie",
-          price: 1099,
-          img: "./images/Qadosh/579181863_1222858519700777_4079832495194303146_n.jpg",
-          desc: "Heavyweight hoodie",
-        },
-      ];
+    let qvSelectedSize = null, qvQuantity = 1, qvProduct = null;
 
-      // ---------- build product grid ----------
-      (function buildGrid() {
-        const grid =
-          document.querySelector("#shop .grid") ||
-          document.querySelector("#shop > div > div > div.grid");
-        const template = document.getElementById(
-          "product-card-template"
-        ).content;
-        products.forEach((p) => {
-          const clone = template.cloneNode(true);
-          const card = clone.querySelector("div");
-          const img = card.querySelector("img");
-          img.src = p.img;
-          img.alt = p.title;
-          card.querySelector("h3").textContent = p.title;
-          card.querySelector(".text-gray-400").textContent = "₱" + p.price;
-          card.querySelector("p").textContent = p.desc;
-          card
-            .querySelector(".quickview-btn")
-            .addEventListener("click", () => openQuickView(p));
-          grid.appendChild(clone);
-        });
-      })();
+    function openQuickView(p){
+      qvProduct = p;
+      qvImage.src = p.img;
+      qvTitle.textContent = p.title;
+      qvPrice.textContent = '₱' + p.price;
+      qvDesc.textContent = p.desc;
+      qvQuantity = 1; qvQty.textContent = qvQuantity;
+      qvSizes.querySelectorAll('.qv-size').forEach(b => b.classList.remove('bg-white','text-black'));
+      qvSelectedSize = null;
+      quickView.classList.remove('hidden'); quickView.classList.add('flex');
+    }
 
-      // ---------- quick view modal ----------
-      const quickView = document.getElementById("quickView");
-      const qvImage = document.getElementById("qvImage");
-      const qvTitle = document.getElementById("qvTitle");
-      const qvPrice = document.getElementById("qvPrice");
-      const qvDesc = document.getElementById("qvDesc");
-      const qvSizes = document.getElementById("qvSizes");
-      const qvQty = document.getElementById("qvQty");
-      let qvSelectedSize = null,
-        qvQuantity = 1,
-        qvProduct = null;
+    document.getElementById('qvClose').addEventListener('click', () => {
+      quickView.classList.add('hidden'); quickView.classList.remove('flex');
+    });
 
-      function openQuickView(p) {
-        qvProduct = p;
-        qvImage.src = p.img;
-        qvTitle.textContent = p.title;
-        qvPrice.textContent = "₱" + p.price;
-        qvDesc.textContent = p.desc;
-        qvQuantity = 1;
-        qvQty.textContent = qvQuantity;
-        // reset size buttons
-        qvSizes
-          .querySelectorAll(".qv-size")
-          .forEach((b) => b.classList.remove("bg-white", "text-black"));
-        qvSelectedSize = null;
-        quickView.classList.remove("hidden");
-        quickView.classList.add("flex");
+    qvSizes.addEventListener('click', (e) => {
+      if(e.target.classList.contains('qv-size')){
+        qvSizes.querySelectorAll('.qv-size').forEach(b => b.classList.remove('bg-white','text-black'));
+        e.target.classList.add('bg-white','text-black');
+        qvSelectedSize = e.target.textContent.trim();
       }
+    });
 
-      document.getElementById("qvClose").addEventListener("click", () => {
-        quickView.classList.add("hidden");
-        quickView.classList.remove("flex");
-      });
+    document.getElementById('qvPlus').addEventListener('click', () => { qvQuantity++; qvQty.textContent = qvQuantity; });
+    document.getElementById('qvMinus').addEventListener('click', () => { if(qvQuantity>1){ qvQuantity--; qvQty.textContent = qvQuantity; } });
 
-      qvSizes.addEventListener("click", (e) => {
-        if (e.target.classList.contains("qv-size")) {
-          qvSizes
-            .querySelectorAll(".qv-size")
-            .forEach((b) => b.classList.remove("bg-white", "text-black"));
-          e.target.classList.add("bg-white", "text-black");
-          qvSelectedSize = e.target.textContent.trim();
-        }
-      });
+    // ---------- CART ----------
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartClose = document.getElementById('cartClose');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartSubtotal = document.getElementById('cartSubtotal');
 
-      document.getElementById("qvPlus").addEventListener("click", () => {
-        qvQuantity++;
-        qvQty.textContent = qvQuantity;
-      });
-      document.getElementById("qvMinus").addEventListener("click", () => {
-        if (qvQuantity > 1) {
-          qvQuantity--;
-          qvQty.textContent = qvQuantity;
-        }
-      });
+    cartBtn.addEventListener('click', () => { cartDrawer.style.transform = 'translateX(0)'; updateCartUI(); });
+    cartClose.addEventListener('click', () => { cartDrawer.style.transform = 'translateX(100%)'; });
 
-      // add to cart from quick view
-      document.getElementById("qvAdd").addEventListener("click", () => {
-        if (!qvSelectedSize) {
-          alert("Choose a size");
-          return;
-        }
-        const item = {
-          id: qvProduct.id,
-          title: qvProduct.title,
-          price: qvProduct.price,
-          size: qvSelectedSize,
-          qty: qvQuantity,
-          img: qvProduct.img,
-        };
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        // if same id+size exists, increase qty
-        const existing = cart.find(
-          (c) => c.id === item.id && c.size === item.size
-        );
-        if (existing) {
-          existing.qty += item.qty;
-        } else {
-          cart.push(item);
-        }
-        localStorage.setItem("cart", JSON.stringify(cart));
-        updateCartUI();
-        quickView.classList.add("hidden");
-        quickView.classList.remove("flex");
-        alert(`Added ${item.qty} x ${item.size} ${item.title} to cart`);
-      });
+    // persistent cart in localStorage
+    function getCart(){ return JSON.parse(localStorage.getItem('cart')) || []; }
+    function setCart(c){ localStorage.setItem('cart', JSON.stringify(c)); }
 
-      // ---------- cart drawer ----------
-      const cartDrawer = document.getElementById("cartDrawer");
-      const cartBtn = document.getElementById("cartBtn");
-      const cartClose = document.getElementById("cartClose");
-      const cartItemsEl = document.getElementById("cartItems");
-      const cartCount = document.getElementById("cartCount");
-      const cartSubtotal = document.getElementById("cartSubtotal");
+    function updateCartUI(){
+      const cart = getCart();
+      cartItemsEl.innerHTML = '';
+      let subtotal = 0, totalCount = 0;
 
-      cartBtn.addEventListener("click", () => {
-        cartDrawer.style.transform = "translateX(0)";
-        updateCartUI();
-      });
-      cartClose.addEventListener("click", () => {
-        cartDrawer.style.transform = "translateX(100%)";
-      });
+      if(cart.length === 0){
+        cartItemsEl.innerHTML = '<div class="text-gray-400 text-center py-10">Your cart is empty</div>';
+      } else {
+        cart.forEach((it, idx) => {
+          subtotal += it.price * it.qty;
+          totalCount += it.qty;
 
-      function updateCartUI() {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cartItemsEl.innerHTML = "";
-        let subtotal = 0,
-          totalCount = 0;
-        if (cart.length === 0) {
-          cartItemsEl.innerHTML =
-            '<div class="text-gray-400 text-center py-10">Your cart is empty</div>';
-        } else {
-          cart.forEach((it, idx) => {
-            subtotal += it.price * it.qty;
-            totalCount += it.qty;
-            const div = document.createElement("div");
-            div.className = "flex items-center gap-3";
-            div.innerHTML = `
-                <img src="${it.img}" class="w-16 h-16 object-cover rounded-md" />
-                <div class="flex-1">
-                <div class="flex justify-between items-start">
-                    <div>
-                    <div class="font-semibold">${it.title}</div>
-                    <div class="text-sm text-gray-400">${it.size}</div>
-                    </div>
-                    <div class="text-sm text-gray-300">₱${it.price}</div>
+          const div = document.createElement('div');
+          div.className = 'flex items-center gap-3';
+          div.innerHTML = `
+            <img src="${it.img}" class="w-16 h-16 object-cover rounded-md" alt="${it.title}" />
+            <div class="flex-1">
+              <div class="flex justify-between items-start">
+                <div>
+                  <div class="font-semibold">${it.title}</div>
+                  <div class="text-sm text-gray-400">${it.size}</div>
                 </div>
-                <div class="mt-2 flex items-center gap-2">
-                    <button class="cart-minus px-2 py-1 bg-white/6 rounded">−</button>
-                    <span class="px-2 text-sm qty">${it.qty}</span>
-                    <button class="cart-plus px-2 py-1 bg-white/6 rounded">+</button>
-                    <button class="ml-3 text-sm text-red-500 remove">Remove</button>
-                </div>
-                </div>
-            `;
-            cartItemsEl.appendChild(div);
+                <div class="text-sm text-gray-300">₱${it.price}</div>
+              </div>
+              <div class="mt-2 flex items-center gap-2">
+                <button class="cart-minus px-2 py-1 bg-white/6 rounded">−</button>
+                <span class="px-2 text-sm qty">${it.qty}</span>
+                <button class="cart-plus px-2 py-1 bg-white/6 rounded">+</button>
+                <button class="ml-3 text-sm text-red-500 remove">Remove</button>
+              </div>
+            </div>
+          `;
+          cartItemsEl.appendChild(div);
 
-            // handlers
-            div.querySelector(".cart-plus").addEventListener("click", () => {
-              it.qty++;
-              localStorage.setItem("cart", JSON.stringify(cart));
-              updateCartUI();
-            });
-            div.querySelector(".cart-minus").addEventListener("click", () => {
-              if (it.qty > 1) {
-                it.qty--;
-                localStorage.setItem("cart", JSON.stringify(cart));
-                updateCartUI();
-              }
-            });
-            div.querySelector(".remove").addEventListener("click", () => {
-              cart.splice(idx, 1);
-              localStorage.setItem("cart", JSON.stringify(cart));
-              updateCartUI();
-            });
+          div.querySelector('.cart-plus').addEventListener('click', () => {
+            it.qty++; setCart(cart); updateCartUI();
           });
-        }
-        cartSubtotal.textContent = "₱" + subtotal;
-        cartCount.textContent = totalCount;
+          div.querySelector('.cart-minus').addEventListener('click', () => {
+            if(it.qty > 1){ it.qty--; setCart(cart); updateCartUI(); }
+          });
+          div.querySelector('.remove').addEventListener('click', () => {
+            cart.splice(idx,1); setCart(cart); updateCartUI();
+          });
+        });
       }
-      // keep UI updated when page loads
+
+      cartSubtotal.textContent = '₱' + subtotal;
+      cartCount.textContent = totalCount;
+    }
+
+    // add to cart from quick view (with size)
+    document.getElementById('qvAdd').addEventListener('click', () => {
+      if(!qvSelectedSize){ alert('Please select a size'); return; }
+      const item = { id: qvProduct.id, title: qvProduct.title, price: qvProduct.price, size: qvSelectedSize, qty: qvQuantity, img: qvProduct.img };
+      const cart = getCart();
+      const existing = cart.find(c => c.id === item.id && c.size === item.size);
+      if(existing){ existing.qty += item.qty; } else { cart.push(item); }
+      setCart(cart);
       updateCartUI();
+      quickView.classList.add('hidden'); quickView.classList.remove('flex');
+      cartDrawer.style.transform = 'translateX(0)';
+    });
 
-      // checkout stub
-      document.getElementById("checkoutBtn").addEventListener("click", () => {
-        if (!(JSON.parse(localStorage.getItem("cart")) || []).length) {
-          alert("Cart empty");
-          return;
-        }
-        alert(
-          "Checkout is a stub in this demo. Implement payment flow externally."
-        );
-      });
+    updateCartUI(); // init
 
-      // ---------- user auth logic (localStorage user) ----------
-      function updateAuthUI() {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const authButtons = document.getElementById("authButtons");
-        const userSection = document.getElementById("userSection");
-        const userName = document.getElementById("userName");
-        if (user) {
-          authButtons.classList.add("hidden");
-          userSection.classList.remove("hidden");
-          userName.textContent =
-            "Welcome, " + (user.name || user.email.split("@")[0]);
-        } else {
-          authButtons.classList.remove("hidden");
-          userSection.classList.add("hidden");
-        }
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      if((getCart() || []).length === 0){ alert('Cart empty'); return; }
+      // For demo: create a simple JSON download or proceed to a checkout page later
+      alert('Checkout is a stub. Implement external payment integration for production.');
+    });
+
+    // ---------- AUTH UI ----------
+    function updateAuthUI(){
+      const user = JSON.parse(localStorage.getItem('user'));
+      const authButtons = document.getElementById('authButtons');
+      const userSection = document.getElementById('userSection');
+      const userName = document.getElementById('userName');
+      if(user){
+        authButtons.classList.add('hidden');
+        userSection.classList.remove('hidden');
+        userName.textContent = 'Welcome, ' + (user.name || (user.email? user.email.split('@')[0]:'User'));
+      } else {
+        authButtons.classList.remove('hidden');
+        userSection.classList.add('hidden');
       }
+    }
+    updateAuthUI();
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('user');
       updateAuthUI();
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        localStorage.removeItem("user");
-        updateAuthUI();
-      });
+    });
 
-      // ---------- mobile menu ----------
-      document.getElementById("menuBtn").addEventListener("click", () => {
-        document.getElementById("mobileNav").classList.toggle("hidden");
-      });
+    // ---------- mobile menu ----------
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const m = document.getElementById('mobileNav');
+      m.classList.toggle('hidden');
+      document.getElementById('menuBtn').setAttribute('aria-expanded', !m.classList.contains('hidden'));
+    });
+    document.querySelectorAll('#mobileNav a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileNav').classList.add('hidden')));
 
-      // ---------- mobile nav close links ----------
-      document.querySelectorAll("#mobileNav a").forEach((a) =>
-        a.addEventListener("click", () => {
-          document.getElementById("mobileNav").classList.add("hidden");
-        })
-      );
+    // ---------- contact form fallback (if you want client-side validation) ----------
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+      // Let FormSubmit handle sending; optionally show a loading UI here
+    });
 
-      // ---------- contact form (demo) ----------
-      document.getElementById("contactForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        // just show a toast/alert for demo
-        alert("Message sent! We will get back to you soon.");
-        e.target.reset();
-      });
+    // ---------- theme accent toggle (keeps dark aesthetic) ----------
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    let themeMode = localStorage.getItem('themeMode') || 'dark';
+    function applyTheme(){
+      if(themeMode === 'dark'){ document.documentElement.style.setProperty('--accent','rgba(59,130,246,0.9)'); themeIcon.textContent = '🌓'; }
+      else { document.documentElement.style.setProperty('--accent','rgba(255,193,7,0.95)'); themeIcon.textContent = '☀️'; }
+    }
+    applyTheme();
+    themeBtn?.addEventListener('click', () => { themeMode = themeMode === 'dark' ? 'warm' : 'dark'; localStorage.setItem('themeMode', themeMode); applyTheme(); });
 
-      // ---------- theme toggle (keeps dark aesthetic, small accent) ----------
-      const themeBtn = document.getElementById("themeBtn");
-      const themeIcon = document.getElementById("themeIcon");
-      // not toggling full light theme; toggles accent intensity for dark mode
-      let themeMode = localStorage.getItem("themeMode") || "dark";
-      function applyTheme() {
-        if (themeMode === "dark") {
-          document.documentElement.style.setProperty(
-            "--accent",
-            "rgba(59,130,246,0.9)"
-          );
-          themeIcon.textContent = "🌓";
-        } else {
-          document.documentElement.style.setProperty(
-            "--accent",
-            "rgba(255,193,7,0.95)"
-          );
-          themeIcon.textContent = "☀️";
-        }
-      }
-      applyTheme();
-      themeBtn?.addEventListener("click", () => {
-        themeMode = themeMode === "dark" ? "warm" : "dark";
-        localStorage.setItem("themeMode", themeMode);
-        applyTheme();
-      });
+    // ---------- quickView backdrop close ----------
+    quickView.addEventListener('click', (e) => { if(e.target === quickView) { quickView.classList.add('hidden'); quickView.classList.remove('flex'); } });
 
-      // ---------- small accessibility: close modal on backdrop click ----------
-      quickView.addEventListener("click", (e) => {
-        if (e.target === quickView) {
-          quickView.classList.add("hidden");
-          quickView.classList.remove("flex");
-        }
+    // ---------- Reveal on scroll (simple IntersectionObserver) ----------
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add('is-visible');
       });
-    </script>
-  </body>
+    }, { threshold: 0.12 });
+    reveals.forEach(r => obs.observe(r));
+
+  </script>
+</body>
 </html>
-
