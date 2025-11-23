@@ -43,13 +43,13 @@
         </button>
 
         <!-- auth / user -->
-        <div id="authButtons" class="hidden md:flex gap-3 reveal">
+        <div id="authButtons" class="hidden gap-3 reveal">
           <a href="./forms/login.html" class="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition">Login</a>
           <a href="./forms/signup.html" class="px-4 py-2 rounded-lg bg-white text-black font-semibold hover:bg-gray-300 transition">Sign Up</a>
         </div>
 
         <!-- user section (hidden unless logged in) -->
-        <div id="userSection" class="hidden md:flex items-center gap-3 reveal">
+        <div id="userSection" class="hidden items-center gap-3 reveal">
           <span id="userName" class="text-sm text-gray-300"></span>
           <button id="logoutBtn" class="px-3 py-2 rounded-lg border border-white/10 hover:bg-red-600/20 transition">Logout</button>
         </div>
@@ -287,7 +287,6 @@
   <!-- SCRIPTS -->
   <script>
     // ---------- sample product data ----------
-    document.addEventListener('DOMContentLoaded', () => {
     const products = [
       { id: 'p1', title: 'Classic Tee', price: 499, img: './images/Qadosh/213.jpg', desc: 'Curated thrift tee' },
       { id: 'p2', title: 'Cargo Jacket', price: 1299, img: './images/Qadosh/577636541_812841778226015_7343443021645008497_n.jpg', desc: 'Vintage cargo style' },
@@ -310,41 +309,6 @@
         grid.appendChild(clone);
       });
     })();
-
-        // ---------- AUTH UI ----------
-    function updateAuthUI(){
-      const user = JSON.parse(localStorage.getItem('user'));
-      const authButtons = document.getElementById('authButtons');
-      const userSection = document.getElementById('userSection');
-      const userName = document.getElementById('userName');
-      if(user){
-        authButtons.classList.add('hidden');
-        userSection.classList.remove('hidden');
-        userName.textContent = 'Welcome, ' + (user.name || (user.email? user.email.split('@')[0]:'User'));
-      } else {
-        authButtons.classList.remove('hidden');
-        userSection.classList.add('hidden');
-      }
-    }
-    updateAuthUI();
-
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('user');
-      updateAuthUI();
-    });
-
-    // ---------- mobile menu ----------
-    document.getElementById('menuBtn').addEventListener('click', () => {
-      const m = document.getElementById('mobileNav');
-      m.classList.toggle('hidden');
-      document.getElementById('menuBtn').setAttribute('aria-expanded', !m.classList.contains('hidden'));
-    });
-    document.querySelectorAll('#mobileNav a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileNav').classList.add('hidden')));
-
-    // ---------- contact form fallback (if you want client-side validation) ----------
-    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
-      // Let FormSubmit handle sending; optionally show a loading UI here
-    });
 
     // ---------- Quick View ----------
     const quickView = document.getElementById('quickView');
@@ -470,7 +434,40 @@
       alert('Checkout is a stub. Implement external payment integration for production.');
     });
 
+    // ---------- AUTH UI ----------
+    function updateAuthUI(){
+      const user = JSON.parse(localStorage.getItem('user'));
+      const authButtons = document.getElementById('authButtons');
+      const userSection = document.getElementById('userSection');
+      const userName = document.getElementById('userName');
+      if(user){
+        authButtons.classList.add('hidden');
+        userSection.classList.remove('hidden');
+        userName.textContent = 'Welcome, ' + (user.name || (user.email? user.email.split('@')[0]:'User'));
+      } else {
+        authButtons.classList.remove('hidden');
+        userSection.classList.add('hidden');
+      }
+    }
+    updateAuthUI();
 
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('user');
+      updateAuthUI();
+    });
+
+    // ---------- mobile menu ----------
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const m = document.getElementById('mobileNav');
+      m.classList.toggle('hidden');
+      document.getElementById('menuBtn').setAttribute('aria-expanded', !m.classList.contains('hidden'));
+    });
+    document.querySelectorAll('#mobileNav a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileNav').classList.add('hidden')));
+
+    // ---------- contact form fallback (if you want client-side validation) ----------
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+      // Let FormSubmit handle sending; optionally show a loading UI here
+    });
 
     // ---------- theme accent toggle (keeps dark aesthetic) ----------
     const themeBtn = document.getElementById('themeBtn');
@@ -494,7 +491,7 @@
       });
     }, { threshold: 0.12 });
     reveals.forEach(r => obs.observe(r));
-    });
+
   </script>
 </body>
 </html>
