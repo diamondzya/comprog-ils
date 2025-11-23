@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Qadosh Threads — Dark Streetwear</title>
     <link rel="shortcut icon" href="images/logo.jpeg" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
       html {
@@ -359,24 +360,57 @@
         </div>
       </section>
 
-      <!-- FOOTER -->
-      <footer class="py-10 mt-12 border-t border-white/5">
-        <div
-          class="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4"
-        >
-          <div class="text-sm text-gray-400">
-            © <strong>QADOSH THREADS</strong> — Built with purpose.
-          </div>
-          <div class="flex gap-4 text-sm text-gray-400">
-            <a href="./forms/privcy.html" class="hover:text-white/90"
-              >Privacy</a
-            >
-            <a href="./forms/terms.html" class="hover:text-white/90">Terms</a>
-            <a href="#contact" class="hover:text-white/90">Contact</a>
-          </div>
-        </div>
-      </footer>
-    </main>
+<footer class="relative py-10 mt-12 border-t border-white/5 bg-gray-900 text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-start gap-10">
+    
+     <!-- Left Side -->
+    <div class="flex-1 flex flex-col justify-center items-start text-left">
+      <p class="text-lg md:text-xl text-gray-300 font-semibold">
+        © <strong class="text-white">QADOSH THREADS</strong> — Built with purpose.
+      </p>
+
+      <!-- Social Media Under Text -->
+      <div class="flex gap-5 mt-4">
+        <a href="https://www.tiktok.com/@qadosh.daily_1602?_r=1&_t=ZS-91bioTjqb5s" class="hover:text-white transition">
+          <i class="fab fa-tiktok text-3xl"></i>
+        </a>
+        <a href="https://www.instagram.com/qadosh_threads?igsh=MTB5OXptMmNiNHFibw==" class="hover:text-white transition">
+          <i class="fab fa-instagram text-3xl"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Side (Banner + QR side by side) -->
+    <aside class="flex flex-col items-center md:items-end gap-4 w-full md:w-auto">
+      
+      <!-- Banner and QR Row -->
+      <div class="flex flex-col sm:flex-row items-center justify-end gap-4 w-full">
+        
+      <!-- Banner (More compact, smaller text) -->
+      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-5 rounded-md shadow-md text-right flex-1 max-w-xl">
+        <h2 class="text-base font-semibold tracking-wide">BEWARE OF FAKE SELLERS!</h2>
+        <p class="text-xs opacity-90 mt-1">
+         This is the official QADOSH THREADS website. Scan the QR code to access the verified site. 
+         For inquiries, please visit our official social media pages and contact information.
+        </p>
+      </div>
+        <!-- QR Code -->
+        <img
+          src="images/582427649_1056994776490473_8497968822774556183_n.png"
+          alt="QADOSH THREADS QR Code"
+          class="w-24 h-24 rounded-md border border-gray-600 shadow-sm hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+
+      <!-- Buttons below -->
+      <div class="flex gap-4 text-sm text-gray-400 justify-end w-full">
+        <a href="./forms/privacy.html" class="hover:text-white/90">Privacy</a>
+        <a href="./forms/terms.html" class="hover:text-white/90">Terms</a>
+      </div>
+    </aside>
+
+  </div>
+</footer>
 
     <!-- QUICK VIEW MODAL -->
     <div
@@ -413,17 +447,17 @@
                 <button
                   class="qv-size px-3 py-1 rounded-md border border-white/8"
                 >
-                  S
+                  Small
                 </button>
                 <button
                   class="qv-size px-3 py-1 rounded-md border border-white/8"
                 >
-                  M
+                  Medium
                 </button>
                 <button
                   class="qv-size px-3 py-1 rounded-md border border-white/8"
                 >
-                  L
+                  Large
                 </button>
               </div>
             </div>
@@ -797,3 +831,4 @@
     </script>
   </body>
 </html>
+
