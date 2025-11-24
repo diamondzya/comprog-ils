@@ -181,7 +181,7 @@
           <!-- FormSubmit hidden fields -->
           <input type="hidden" name="_captcha" value="false">
           <!-- optional: redirect after submit -->
-          <input type="hidden" name="_next" value="https://diamondzya.github.io/thank-you/">
+          <input type="hidden" name="_next" value="https://diamondzya.github.io/thank-you">
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input name="name" placeholder="Your name" class="bg-[#0e1113] p-3 rounded-lg border border-white/5 outline-none" required>
@@ -356,8 +356,15 @@
     const cartCount = document.getElementById('cartCount');
     const cartSubtotal = document.getElementById('cartSubtotal');
 
-    cartBtn.addEventListener('click', () => { cartDrawer.style.transform = 'translateX(0)'; updateCartUI(); });
-    cartClose.addEventListener('click', () => { cartDrawer.style.transform = 'translateX(100%)'; });
+    cartBtn.addEventListener('click', () => {
+    cartDrawer.classList.remove('translate-x-full');
+    updateCartUI();
+  });
+
+  cartClose.addEventListener('click', () => {
+    cartDrawer.classList.add('translate-x-full');
+  });
+
 
     // persistent cart in localStorage
     function getCart(){ return JSON.parse(localStorage.getItem('cart')) || []; }
@@ -385,7 +392,7 @@
                   <div class="font-semibold">${it.title}</div>
                   <div class="text-sm text-gray-400">${it.size}</div>
                 </div>
-                <div class="text-sm text-gray-300">₱${it.price}</div>
+                <div class="text-sm text-gray-300">₱${it.price.toLocaleString()}</div>
               </div>
               <div class="mt-2 flex items-center gap-2">
                 <button class="cart-minus px-2 py-1 bg-white/6 rounded">−</button>
@@ -409,7 +416,7 @@
         });
       }
 
-      cartSubtotal.textContent = '₱' + subtotal;
+      cartSubtotal.textContent = '₱' + subtotal.toLocaleString();
       cartCount.textContent = totalCount;
     }
 
